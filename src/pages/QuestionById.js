@@ -137,7 +137,7 @@ const QuestionById = () => {
         method: 'PUT',
         url: 'http://localhost:5000/api/questions/' + questionId + '/answers/' + answerId,
         data: {
-          description: description
+          description: answerDescription
         },
         headers: {
           'Content-Type': 'application/json',
@@ -393,7 +393,7 @@ const QuestionById = () => {
               <Button autoFocus color='inherit' onClick={() => {
                 handleEditAnswer().then(() => {
                   handleGetQuestionById();
-                  handleQuestionEditClose();
+                  handleAnswerEditClose();
                 });
               }}>
                 save
