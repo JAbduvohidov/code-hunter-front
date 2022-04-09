@@ -21,18 +21,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { useSnackbar } from 'notistack';
 
-const Users = () => {
+const Organizations = () => {
     const navigate = useNavigate();
 
     const snackbar = useSnackbar();
 
-    const [users, setUsers] = useState([]);
+    const [organizations, setOrganizations] = useState([]);
     const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
 
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
     const [email, setEmail] = useState('');
-    const [user, setUser] = useState('');
+    const [organization, setOrganization] = useState('');
 
     const [editOpen, setEditOpen] = useState(false);
 
@@ -60,23 +60,23 @@ const Users = () => {
       setOpenDeleteConfirmation(true);
     };
 
-    const handleEditUserChange = (title, value) => {
-      setUser(prevState => ({ ...prevState, [title]: value }));
+    const handleEditOrganizationChange = (title, value) => {
+      setOrganization(prevState => ({ ...prevState, [title]: value }));
     };
 
     const handleDeleteConfirmationClose = () => {
       setOpenDeleteConfirmation(false);
     };
 
-    const handleEditUser = () => {
+    const handleEditOrganization = () => {
       return new Promise(resolve => {
         axios({
           method: 'PUT',
-          url: 'http://localhost:5000/api/users/' + user.id,
+          url: 'http://localhost:5000/api/users/' + organization.id,
           data: {
-            username: user.username,
-            email: user.email,
-            role: user.role
+            username: organization.username,
+            email: organization.email,
+            role: organization.role
           },
           headers: {
             'Content-Type': 'application/json',
@@ -102,10 +102,10 @@ const Users = () => {
       });
     };
 
-    const handleDeleteUser = () => {
+    const handleDeleteOrganization = () => {
       axios({
         method: 'DELETE',
-        url: 'http://localhost:5000/api/users/' + user.id,
+        url: 'http://localhost:5000/api/users/' + organization.id,
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -128,10 +128,10 @@ const Users = () => {
         });
     };
 
-    const handleGetUsers = () => {
+    const handleGetOrganizations = () => {
       axios({
         method: 'GET',
-        url: 'http://localhost:5000/api/users',
+        url: 'http://localhost:5000/api/users/organizations',
         params: {
           email: email,
           limit: limit,
@@ -145,7 +145,7 @@ const Users = () => {
         crossDomain: true
       }).then((response) => {
         if (response.status === 200) {
-          setUsers(response.data);
+          setOrganizations(response.data);
         }
       })
         .catch((error) => {
@@ -158,8 +158,8 @@ const Users = () => {
     };
 
     const handleEdit = () => {
-      handleEditUser().then(() => {
-        handleGetUsers();
+      handleEditOrganization().then(() => {
+        handleGetOrganizations();
         handleEditClose();
       });
     };
@@ -171,23 +171,23 @@ const Users = () => {
         navigate('/questions', { replace: true });
       }
 
-      handleGetUsers();
+      handleGetOrganizations();
     }, [email]);
 
     return (
       <>
         <Helmet>
-          <title>Users | codehunter</title>
+          <title>Organizations | codehunter</title>
         </Helmet>
         <Dialog open={editOpen} onClose={handleEditClose}>
-          <DialogTitle>Edit user info</DialogTitle>
+          <DialogTitle>Edit organization info</DialogTitle>
           <DialogContent>
             <TextField
               margin='dense'
               name='email'
               label='Email'
               type='email'
-              value={user.email}
+              value={organization.email}
               fullWidth
               disabled
             />
@@ -196,21 +196,21 @@ const Users = () => {
               margin='dense'
               label='Username'
               type='text'
-              value={user.username}
+              value={organization.username}
               onChange={(e) => {
-                handleEditUserChange('username', e.target.value);
+                handleEditOrganizationChange('username', e.target.value);
               }}
               fullWidth
             />
             <Autocomplete
               id='role'
               style={{ marginTop: 10 }}
-              options={['User', 'Admin', 'Organization']}
+              options={['User', 'Organization']}
               fullWidth
               onChange={(e, newValue) => {
-                handleEditUserChange('role', newValue);
+                handleEditOrganizationChange('role', newValue);
               }}
-              value={user.role}
+              value={organization.role}
               renderInput={(params) => <TextField {...params} label='Role' variant='outlined' />}
             />
           </DialogContent>
@@ -227,10 +227,10 @@ const Users = () => {
           open={openDeleteConfirmation}
           onClose={handleDeleteConfirmationClose}
         >
-          <DialogTitle>Are you sure you want to delete this user ?</DialogTitle>
+          <DialogTitle>Are you sure you want to delete this organization ?</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              If you delete this account <b>{user.email}</b> can not be restored!
+              If you delete this account <b>{organization.email}</b> can not be restored!
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -238,8 +238,8 @@ const Users = () => {
               Cancel
             </Button>
             <Button onClick={() => {
-              handleDeleteUser();
-              handleGetUsers();
+              handleDeleteOrganization();
+              handleGetOrganizations();
               handleDeleteConfirmationClose();
             }} color='error'>
               Delete
@@ -291,7 +291,7 @@ const Users = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell>
-                            Username
+                            Org. name
                           </TableCell>
                           <TableCell>
                             Email
@@ -317,47 +317,47 @@ const Users = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {users.users && users.users.length ? users.users.map((user) => (
+                        {organizations.organizations && organizations.organizations.length ? organizations.organizations.map((organization) => (
                           <TableRow
                             hover
-                            key={user.id}
+                            key={organization.id}
                           >
                             <TableCell>
-                              {user.username}
+                              {organization.username}
                             </TableCell>
                             <TableCell>
-                              {user.email}
+                              {organization.email}
                             </TableCell>
                             {isAdmin &&
                             <TableCell>
-                              {user.role}
+                              {organization.role}
                             </TableCell>}
                             {isAdmin &&
                             <TableCell>
-                              {user.removed.toString()}
+                              {organization.removed.toString()}
                             </TableCell>}
                             <TableCell>
-                              {moment(user.createdAt).format('DD/MM/YYYY hh:mm')}
+                              {moment(organization.createdAt).format('DD/MM/YYYY hh:mm')}
                             </TableCell>
                             <TableCell>
-                              {moment(user.updatedAt).format('DD/MM/YYYY hh:mm')}
+                              {moment(organization.updatedAt).format('DD/MM/YYYY hh:mm')}
                             </TableCell>
                             {isAdmin &&
                             <TableCell align='center'>
-                              <Tooltip title='Edit user'>
+                              <Tooltip title='Edit organization'>
                                 <IconButton onClick={() => {
-                                  setUser(user);
+                                  setOrganization(organization);
                                   handleEditOpen();
                                 }}>
                                   <EditIcon color='primary' />
                                 </IconButton>
                               </Tooltip>
-                              <Tooltip title='Delete user'>
-                                <IconButton disabled={user.removed} onClick={() => {
-                                  setUser(user);
+                              <Tooltip title='Delete organization'>
+                                <IconButton disabled={organization.removed} onClick={() => {
+                                  setOrganization(organization);
                                   handleDeleteConfirmationOpen();
                                 }}>
-                                  <DeleteIcon color={user.removed ? 'disabled' : 'error'} />
+                                  <DeleteIcon color={organization.removed ? 'disabled' : 'error'} />
                                 </IconButton>
                               </Tooltip>
                             </TableCell>}
@@ -373,7 +373,7 @@ const Users = () => {
                 </PerfectScrollbar>
                 <TablePagination
                   component='div'
-                  count={users.count}
+                  count={organizations.count}
                   onPageChange={handlePageChange}
                   onRowsPerPageChange={handleLimitChange}
                   page={page}
@@ -389,4 +389,4 @@ const Users = () => {
   }
 ;
 
-export default Users;
+export default Organizations;

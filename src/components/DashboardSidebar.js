@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Box,
@@ -15,8 +15,10 @@ import {
 import NavItem from './NavItem';
 import PublicRoundedIcon from '@material-ui/icons/PublicRounded';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import BusinessIcon from '@material-ui/icons//Business';
 
-const DashboardSidebar = ({ onMobileClose, openMobile }) => {
+const DashboardSidebar = ({onMobileClose, openMobile}) => {
   const location = useLocation();
 
   const isAuthorized = localStorage.getItem('accessToken') !== null;
@@ -35,7 +37,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         height: '100%'
       }}
     >
-      <Box sx={{ p: 2 }}>
+      <Box sx={{p: 2}}>
         <List>
           <NavItem
             href={'/questions'}
@@ -57,6 +59,20 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
               title={'Profile'}
               icon={AccountCircleIcon}
             /> : <></>}
+          {(isAuthorized) ?
+            <NavItem
+              href={'/rating'}
+              key={'Rating'}
+              title={'Rating'}
+              icon={TrendingUpIcon}
+            /> : <></>}
+          {(isAuthorized) ?
+            <NavItem
+              href={'/organizations'}
+              key={'organizations'}
+              title={'Organizations'}
+              icon={BusinessIcon}
+            /> : <></>}
           {(!isAuthorized) ? <NavItem
             href={'/login'}
             key={'Login'}
@@ -77,7 +93,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           /> : <></>}
         </List>
       </Box>
-      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{flexGrow: 1}}/>
     </Box>
   );
 
