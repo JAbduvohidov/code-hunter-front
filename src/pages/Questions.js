@@ -322,9 +322,10 @@ const Questions = () => {
                       variant='outlined'
                     />
                   </Box>
+                  { isAuthorized ?
                   <FormGroup>
                     <FormControlLabel control={<Checkbox checked={all} onChange={handleAllChange} />} label="Show all" />
-                  </FormGroup>
+                  </FormGroup> : <></>}
                 </CardContent>
               </Card>
             </Box>

@@ -7,7 +7,7 @@ import {
   Container,
   Dialog, DialogActions,
   DialogContent, DialogContentText, DialogTitle,
-  Grid,
+  Grid, Menu, MenuItem,
   TableCell,
   TextField, Toolbar,
   Tooltip,
@@ -27,6 +27,7 @@ import MarkdownEditor from '@uiw/react-markdown-editor';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const QuestionById = () => {
 
@@ -338,6 +339,16 @@ const QuestionById = () => {
     handleGetQuestionById();
   }, []);
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+
   return (
     <>
       <Helmet>
@@ -436,20 +447,52 @@ const QuestionById = () => {
           <Card>
             <div style={{ margin: '10px' }}>
               {isAuthorized && (isAdmin || userId === question.userId) ?
-                <Tooltip title={question.solved ? 'Mark unsolved' : 'Mark solved'}>
-                  <IconButton size='small' onClick={() => {
-                    handleToggleQuestionSolved().then(() => {
-                      handleGetQuestionById();
-                    });
-                  }}>
-                    <DoneAllIcon fontSize='inherit' />
-                  </IconButton>
-                </Tooltip>
-                :
-                <></>}
-              <Typography variant={'h3'} marginBottom={1}>
-                {question.solved ? '[SOLVED] ' : ''}{question.title}
-              </Typography>
+                  <Tooltip title={question.solved ? 'Mark unsolved' : 'Mark solved'}>
+                    <IconButton size='small' onClick={() => {
+                      handleToggleQuestionSolved().then(() => {
+                        handleGetQuestionById();
+                      });
+                    }}>
+                      <DoneAllIcon fontSize='inherit' />
+                    </IconButton>
+                  </Tooltip>
+                  :
+                  <></>}
+              <Grid container direction={'row-reverse'} justifyContent={"space-between"} >
+                <Grid item>
+                  <Tooltip title='Search in...' onClick={handleMenuClick}>
+                    <IconButton>
+                      <MoreVertIcon color='primary' />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleMenuClose}
+                  >
+                        <MenuItem key={'Stack Overflow'} onClick={handleMenuClose}>
+                          <a href={"https://stackoverflow.com/search?q="+question.title} target="_blank" rel="noreferrer noopener">
+                            Stack Overflow
+                          </a>
+                        </MenuItem>
+                        <MenuItem key={'DuckDuckGo'} onClick={handleMenuClose}>
+                          <a href={"https://duckduckgo.com/?q=test"+question.title} target="_blank" rel="noreferrer noopener">
+                            DuckDuckGo
+                          </a>
+                        </MenuItem>
+                        <MenuItem key={'Google'} onClick={handleMenuClose}>
+                          <a href={"https://www.google.com/search?q="+question.title} target="_blank" rel="noreferrer noopener">
+                            Google
+                          </a>
+                        </MenuItem>
+                  </Menu>
+                </Grid>
+                <Grid item>
+                  <Typography variant={'h3'} marginBottom={1}>
+                    {question.solved ? '[SOLVED] ' : ''}{question.title}
+                  </Typography>
+                </Grid>
+              </Grid>
               <Grid
                 container
                 direction='row'
