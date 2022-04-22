@@ -2,8 +2,8 @@ import { Helmet } from 'react-helmet';
 import {
   Box, Button,
   Card,
-  CardContent,
-  Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  CardContent, Checkbox,
+  Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormGroup,
   InputAdornment,
   SvgIcon,
   Table,
@@ -35,6 +35,7 @@ const Questions = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [question, setQuestion] = useState('');
+  const [all, setAll] = useState(true);
   const [questionId, setQuestionId] = useState('');
   const [questions, setQuestions] = useState([]);
 
@@ -49,6 +50,10 @@ const Questions = () => {
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
   };
+
+  const handleAllChange = (_) => {
+      setAll(!all);
+  }
 
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
   const handleDeleteConfirmationOpen = () => {
@@ -90,7 +95,8 @@ const Questions = () => {
       params: {
         questionTitle: question,
         limit: limit,
-        offset: page * limit
+        offset: page * limit,
+        all: all
       },
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +110,7 @@ const Questions = () => {
       }
     })
       .catch((error) => {
-        snackbar.enqueueSnackbar(error.data.error, {
+        snackbar.enqueueSnackbar(error?.data?.error, {
           variant: 'error'
         });
       });
@@ -229,7 +235,7 @@ const Questions = () => {
 
   useEffect(() => {
     handleGetQuestions();
-  }, [question]);
+  }, [question, all]);
 
   return (
     <>
@@ -316,6 +322,9 @@ const Questions = () => {
                       variant='outlined'
                     />
                   </Box>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox checked={all} onChange={handleAllChange} />} label="Show all" />
+                  </FormGroup>
                 </CardContent>
               </Card>
             </Box>
