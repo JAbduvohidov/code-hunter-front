@@ -1,14 +1,14 @@
 import {Helmet} from 'react-helmet';
 import {
     Box,
-    Card, Container, Icon,
-    Table, TableBody, TableCell,
-    TableHead, TablePagination, TableRow, Typography,
+    Card, Grid, Table, TableBody, TableCell,
+    TableHead, TableRow, Typography,
 } from '@material-ui/core';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
+import MarkdownPreview from "@uiw/react-markdown-preview";
 
 const Rating = () => {
         const navigate = useNavigate();
@@ -58,99 +58,100 @@ const Rating = () => {
                         py: 3
                     }}
                 >
-                    <Container>
-                        <Box sx={{pt: 3}}>
-                            <Card>
-                                <Typography marginLeft={3} marginTop={3} variant="h3" component="div">
-                                    <EmojiEventsIcon values={"Top 100 useful questions"}/> Top 100 useful questions
-                                </Typography>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>
-                                                No.
-                                            </TableCell>
-                                            <TableCell>
-                                                Title
-                                            </TableCell>
-                                            <TableCell>
-                                                Useful
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {rating.questions && rating.questions.length ? rating.questions.map((question, index) => (
-                                            <TableRow
-                                                hover
-                                                key={question.id}
-                                            >
+                    <Grid container direction={"row"} justifyContent={"space-around"}>
+                        <Grid item xs margin={1}>
+                            <Box sx={{pt: 3}}>
+                                <Card>
+                                    <Typography marginLeft={3} marginTop={3} variant="h3" component="div">
+                                        <EmojiEventsIcon values={"Top 100 useful questions"}/> Top 100 useful questions
+                                    </Typography>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
                                                 <TableCell>
-                                                    #{index + 1}
+                                                    No.
                                                 </TableCell>
                                                 <TableCell>
-                                                    {question.solved ? '[SOLVED]' : ''}{question.title}
+                                                    Title
                                                 </TableCell>
                                                 <TableCell>
-                                                    {question.useful}
+                                                    Useful
                                                 </TableCell>
                                             </TableRow>
-                                        )) : <TableRow>
-                                            <TableCell>
-                                                No data :(
-                                            </TableCell>
-                                        </TableRow>}
-                                    </TableBody>
-                                </Table>
-                            </Card>
-                        </Box>
-                    </Container>
-
-                    <Container>
-                        <Box sx={{pt: 3}}>
-                            <Card>
-                                <Typography marginLeft={3} marginTop={3} variant="h3" component="div">
-                                    <EmojiEventsIcon values={"Top 100 useful answers"}/> Top 100 useful answers
-                                </Typography>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>
-                                                No.
-                                            </TableCell>
-                                            <TableCell>
-                                                Title
-                                            </TableCell>
-                                            <TableCell>
-                                                Useful
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {rating.answers && rating.answers.length ? rating.answers.map((answer, index) => (
-                                            <TableRow
-                                                hover
-                                                key={answer.id}
-                                            >
+                                        </TableHead>
+                                        <TableBody>
+                                            {rating.questions && rating.questions.length ? rating.questions.map((question, index) => (
+                                                <TableRow
+                                                    hover
+                                                    key={question.id}
+                                                >
+                                                    <TableCell>
+                                                        #{index + 1}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {question.solved ? '[SOLVED]' : ''}{question.title}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {question.useful}
+                                                    </TableCell>
+                                                </TableRow>
+                                            )) : <TableRow>
                                                 <TableCell>
-                                                    #{index + 1}
+                                                    No data :(
+                                                </TableCell>
+                                            </TableRow>}
+                                        </TableBody>
+                                    </Table>
+                                </Card>
+                            </Box>
+                        </Grid>
+                        <Grid item xs margin={1}>
+                            <Box sx={{pt: 3}}>
+                                <Card>
+                                    <Typography marginLeft={3} marginTop={3} variant="h3" component="div">
+                                        <EmojiEventsIcon values={"Top 100 useful answers"}/> Top 100 useful answers
+                                    </Typography>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>
+                                                    No.
                                                 </TableCell>
                                                 <TableCell>
-                                                    {answer.description}
+                                                    Title
                                                 </TableCell>
                                                 <TableCell>
-                                                    {answer.useful}
+                                                    Useful
                                                 </TableCell>
                                             </TableRow>
-                                        )) : <TableRow>
-                                            <TableCell>
-                                                No data :(
-                                            </TableCell>
-                                        </TableRow>}
-                                    </TableBody>
-                                </Table>
-                            </Card>
-                        </Box>
-                    </Container>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rating.answers && rating.answers.length ? rating.answers.map((answer, index) => (
+                                                <TableRow
+                                                    hover
+                                                    key={answer.id}
+                                                >
+                                                    <TableCell>
+                                                        #{index + 1}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <MarkdownPreview style={{ fontSize: 15 }} source={answer.description} />
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {answer.useful}
+                                                    </TableCell>
+                                                </TableRow>
+                                            )) : <TableRow>
+                                                <TableCell>
+                                                    No data :(
+                                                </TableCell>
+                                            </TableRow>}
+                                        </TableBody>
+                                    </Table>
+                                </Card>
+                            </Box>
+                        </Grid>
+                    </Grid>
                 </Box>
             </>
         );

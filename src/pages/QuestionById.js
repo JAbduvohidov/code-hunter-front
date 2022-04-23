@@ -567,10 +567,6 @@ const QuestionById = () => {
               </Grid>
             </div>
 
-            {/*<br />*/}
-            {/*<hr style={{ border: 'none', background: 'none', height: '1px', borderBottom: '1px dotted gray' }} />*/}
-            {/*<br />*/}
-
             <Typography variant={'subtitle1'} fontSize={20} marginLeft={1}>
               {question.answers && (question.answers.length > 1 ? question.answers.length + ' Answers' : question.answers.length + ' Answer')}
             </Typography>
