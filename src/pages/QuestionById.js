@@ -476,7 +476,7 @@ const QuestionById = () => {
                           </a>
                         </MenuItem>
                         <MenuItem key={'DuckDuckGo'} onClick={handleMenuClose}>
-                          <a href={"https://duckduckgo.com/?q=test"+question.title} target="_blank" rel="noreferrer noopener">
+                          <a href={"https://duckduckgo.com/?q="+question.title} target="_blank" rel="noreferrer noopener">
                             DuckDuckGo
                           </a>
                         </MenuItem>
