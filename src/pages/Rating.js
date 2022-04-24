@@ -63,6 +63,114 @@ const Rating = () => {
                             <Box sx={{pt: 3}}>
                                 <Card>
                                     <Typography marginLeft={3} marginTop={3} variant="h3" component="div">
+                                        <EmojiEventsIcon values={"Top 100 users by useful questions"}/> Top 100 users by
+                                        useful questions
+                                    </Typography>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>
+                                                    No.
+                                                </TableCell>
+                                                <TableCell>
+                                                    Username
+                                                </TableCell>
+                                                <TableCell>
+                                                    Email
+                                                </TableCell>
+                                                <TableCell>
+                                                    Useful Questions
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rating.usefulQUsers && rating.usefulQUsers.length ? rating.usefulQUsers.map((user, index) => (
+                                                <TableRow
+                                                    hover
+                                                    key={user.id}
+                                                >
+                                                    <TableCell>
+                                                        #{index + 1}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {user.userName}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <a href={"mailto:" + user.email}>{user.email}</a>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {user.usefulQuestionsCount}
+                                                    </TableCell>
+                                                </TableRow>
+                                            )) : <TableRow>
+                                                <TableCell>
+                                                    No data :(
+                                                </TableCell>
+                                            </TableRow>}
+                                        </TableBody>
+                                    </Table>
+                                </Card>
+                            </Box>
+                        </Grid>
+                        <Grid item xs margin={1}>
+                            <Box sx={{pt: 3}}>
+                                <Card>
+                                    <Typography marginLeft={3} marginTop={3} variant="h3" component="div">
+                                        <EmojiEventsIcon values={"Top 100 users by useful answers"}/> Top 100 users by
+                                        useful answers
+                                    </Typography>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>
+                                                    No.
+                                                </TableCell>
+                                                <TableCell>
+                                                    Username
+                                                </TableCell>
+                                                <TableCell>
+                                                    Email
+                                                </TableCell>
+                                                <TableCell>
+                                                    Useful Answers
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rating.usefulAUsers && rating.usefulAUsers.length ? rating.usefulAUsers.map((user, index) => (
+                                                <TableRow
+                                                    hover
+                                                    key={user.id}
+                                                >
+                                                    <TableCell>
+                                                        #{index + 1}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {user.userName}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <a href={"mailto:" + user.email}>{user.email}</a>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {user.usefulAnswersCount}
+                                                    </TableCell>
+                                                </TableRow>
+                                            )) : <TableRow>
+                                                <TableCell>
+                                                    No data :(
+                                                </TableCell>
+                                            </TableRow>}
+                                        </TableBody>
+                                    </Table>
+                                </Card>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Grid container direction={"row"} justifyContent={"space-around"}>
+                        <Grid item xs margin={1}>
+                            <Box sx={{pt: 3}}>
+                                <Card>
+                                    <Typography marginLeft={3} marginTop={3} variant="h3" component="div">
                                         <EmojiEventsIcon values={"Top 100 useful questions"}/> Top 100 useful questions
                                     </Typography>
                                     <Table>
@@ -135,7 +243,8 @@ const Rating = () => {
                                                         #{index + 1}
                                                     </TableCell>
                                                     <TableCell>
-                                                        <MarkdownPreview style={{ fontSize: 15 }} source={answer.description} />
+                                                        <MarkdownPreview style={{fontSize: 15}}
+                                                                         source={answer.description}/>
                                                     </TableCell>
                                                     <TableCell>
                                                         {answer.useful}
