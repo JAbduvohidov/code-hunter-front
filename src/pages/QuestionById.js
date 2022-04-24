@@ -7,7 +7,7 @@ import {
   Container,
   Dialog, DialogActions,
   DialogContent, DialogContentText, DialogTitle,
-  Grid, Menu, MenuItem,
+  Grid, Link, Menu, MenuItem,
   TableCell,
   TextField, Toolbar,
   Tooltip,
@@ -471,19 +471,19 @@ const QuestionById = () => {
                       onClose={handleMenuClose}
                   >
                         <MenuItem key={'Stack Overflow'} onClick={handleMenuClose}>
-                          <a href={"https://stackoverflow.com/search?q="+question.title} target="_blank" rel="noreferrer noopener">
+                          <Link href={"https://stackoverflow.com/search?q="+question.title} color='inherit' target={"_blank"} rel={"noreferrer noopener"}>
                             Stack Overflow
-                          </a>
+                          </Link>
                         </MenuItem>
                         <MenuItem key={'DuckDuckGo'} onClick={handleMenuClose}>
-                          <a href={"https://duckduckgo.com/?q="+question.title} target="_blank" rel="noreferrer noopener">
+                          <Link href={"https://duckduckgo.com/?q="+question.title} target="_blank" rel="noreferrer noopener">
                             DuckDuckGo
-                          </a>
+                          </Link>
                         </MenuItem>
                         <MenuItem key={'Google'} onClick={handleMenuClose}>
-                          <a href={"https://www.google.com/search?q="+question.title} target="_blank" rel="noreferrer noopener">
+                          <Link href={"https://www.google.com/search?q="+question.title} target="_blank" rel="noreferrer noopener">
                             Google
-                          </a>
+                          </Link>
                         </MenuItem>
                   </Menu>
                 </Grid>

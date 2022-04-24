@@ -172,7 +172,7 @@ const Users = () => {
       }
 
       handleGetUsers();
-    }, [email]);
+    }, [email, page, limit]);
 
     return (
       <>

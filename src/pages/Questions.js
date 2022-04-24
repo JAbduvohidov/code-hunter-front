@@ -235,7 +235,7 @@ const Questions = () => {
 
   useEffect(() => {
     handleGetQuestions();
-  }, [question, all]);
+  }, [question, all, page, limit]);
 
   return (
     <>

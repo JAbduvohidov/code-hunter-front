@@ -172,7 +172,7 @@ const Organizations = () => {
       }
 
       handleGetOrganizations();
-    }, [email]);
+    }, [email, page, limit]);
 
     return (
       <>

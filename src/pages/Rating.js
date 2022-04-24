@@ -1,7 +1,7 @@
 import {Helmet} from 'react-helmet';
 import {
     Box,
-    Card, Grid, Table, TableBody, TableCell,
+    Card, Grid, Link, Table, TableBody, TableCell,
     TableHead, TableRow, Typography,
 } from '@material-ui/core';
 import {useEffect, useState} from 'react';
@@ -197,7 +197,9 @@ const Rating = () => {
                                                         #{index + 1}
                                                     </TableCell>
                                                     <TableCell>
-                                                        {question.solved ? '[SOLVED]' : ''}{question.title}
+                                                        <Link href={"/questions/"+question.id} color='inherit'>
+                                                            {question.solved ? '[SOLVED]' : ''}{question.title}
+                                                        </Link>
                                                     </TableCell>
                                                     <TableCell>
                                                         {question.useful}
@@ -243,8 +245,10 @@ const Rating = () => {
                                                         #{index + 1}
                                                     </TableCell>
                                                     <TableCell>
-                                                        <MarkdownPreview style={{fontSize: 15}}
-                                                                         source={answer.description}/>
+                                                        <Link href={"/questions/"+answer.questionId} color='inherit'>
+                                                            <MarkdownPreview style={{fontSize: 15}}
+                                                                             source={answer.description}/>
+                                                        </Link>
                                                     </TableCell>
                                                     <TableCell>
                                                         {answer.useful}
